@@ -14,3 +14,28 @@ body {
 .navbar-brand > .material-symbols-outlined {
     font-size: 40px;
 }
+
+.thesis-title {
+  display: block;
+  font-size: 0.80rem;
+  color: #6c757d; /* Bootstrap muted */
+  margin-top: 0.25rem;
+  line-height: 1.4;
+}
+
+.ul-xs {
+  font-size: 0.80rem;   /* try 0.8–0.9 */
+}
+
+#contact input,
+#contact textarea {
+  border-radius: 0.5rem;
+}
+
+#contact button {
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+#contact button:hover {
+  transform: translateY(-1px);
+}

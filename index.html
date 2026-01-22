@@ -16,10 +16,55 @@
     <!--Custom CSS-->
     <link rel="stylesheet" href="index.css">
   </head>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("contactForm");
+    const alertBox = document.getElementById("formAlert");
+    const btnText = document.getElementById("btnText");
+    const btnSpinner = document.getElementById("btnSpinner");
+    const submitBtn = document.getElementById("submitBtn");
+
+    form.addEventListener("submitBtn", async function (e) {
+      e.preventDefault();
+
+      btnText.textContent = "SENDING...";
+      btnSpinner.classList.remove("d-none");
+      submitBtn.disabled = true;
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: formData,
+          headers: { "Accept": "application/json" }
+        });
+
+        if (response.ok) {
+          alertBox.className = "alert alert-success";
+          alertBox.textContent = "✅ Message sent successfully! I’ll get back to you soon.";
+          form.reset();
+        } else {
+          throw new Error("Form submission failed");
+        }
+      } catch (error) {
+        alertBox.className = "alert alert-danger";
+        alertBox.textContent = "❌ Something went wrong. Please try again later.";
+      }
+
+      alertBox.classList.remove("d-none");
+      btnText.textContent = "SEND MESSAGE";
+      btnSpinner.classList.add("d-none");
+      submitBtn.disabled = false;
+    });
+  });
+  </script>
+
   <body>
     <div class="container-fluid px-0">
         <!--Navbar-->
-        <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <nav class="navbar navbar-expand-lg navbar-light shadow fixed-top bg-white">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.html">
                     <span class="material-symbols-outlined me-1">biotech</span>
@@ -40,7 +85,7 @@
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
                       <li class="nav-item">
-                        <a class="nav-link me-lg-3" href="index.html">Home</a>
+                        <a class="nav-link me-lg-3" href="#hero">Home</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link me-lg-3" href="#about">About</a>
@@ -62,23 +107,23 @@
         <!--End Navbar-->
 
         <!--Hero-->
-        <header class="bg-light py-5">
+        <header id="hero" class="bg-light py-5">
           <div class="container px-5">
             <div class="row align-items-center">
               <div class="col-lg-8 col-xl-7 col-xxl-6">
                 <div class="my-5">
-                  <h2 class="text-center fw-bold mb-2">Theo's Portfolio</h2>
-                  <h2 class="text-primary text-center fw-bold mb-2">Healthcare professional, and Health informatics specialist</h2>
+                  <h2 class="text-center fw-bold mb-2">Theo John M. Segismundo, RMT</h2>
+                  <h2 class="text-primary text-center fw-bold mb-2">Health Informatics (Bioinformatics)</h2>
                   <p class="lead text-muted mb-4 text-center">
                     I am a medical laboratory scientist and Health informatics specialist. This site will serve as my personal portfolio for my projects.
                   </p>
                   <div class="d-grid gap-3 d-sm-flex justify-content-center">
-                    <a class="btn btn-primary btn-large text-uppercase" href="#about">
-                      Learn More
+                    <a class="btn btn-outline-primary btn-large text-uppercase" href="#about">
+                      About
                       <span class="material-symbols-outlined ms-2">id_card</span>
                     </a>
-                    <a class="btn btn-outline-primary btn-large text-uppercase" href="#projects">
-                      My Projects
+                    <a class="btn btn-outline-primary btn-large text-uppercase" href="#stats">
+                      Services
                       <span class="material-symbols-outlined ms-2">assignment</span>
                     </a>
                   </div>
@@ -100,21 +145,258 @@
             <h2 class="fw-bold mb-3">About Me</h2>
             <p class="text-muted text-center">
               I am Theo John M. Segismundo, a graduate student of Health Informatics (Bioinformatics)
-              from the University of the Philippines Manila. 
+              from the University of the Philippines Manila.
             </p>
           </div>
+          <div class = "container px-5">
+            <h5 class="fw-bold mb-3">Education</h5>
+            <ul>
+              <li>
+                <strong>Master of Science in Health Informatics (Bioinformatics)</strong><br>
+                <span class="text-muted">University of the Philippines Manila (2022–2026)</span><br>
+                <span class="thesis-title">
+                  Master’s Thesis: "Network-based Prioritization of Orphan Biosynthetic Gene Clusters
+                  to Rank Candidate Enzymatic Modulators of JNK1 and IKKβ Involved in Insulin Resistance"
+                </span>
+              </li>
+              <li>
+                <strong>Bachelor of Science in Medical Technology</strong><br>
+                <span class="text-muted">Far Eastern University Manila (2015-2019)</span>
+              </li>
+            </ul>
+          </div>
+          <div class = "container px-5">
+            <h5 class="fw-bold mb-3">Skills</h5>
+            <ul class="small">
+              <li><strong>Programming Language: </strong>Python, R, JavaScript, MySQL, MATLAB</li>
+              <li><strong>Markup Language: </strong>HTML, RMarkdown, LaTeX</li>
+              <li><strong>Technical Skills:</strong>
+                <ul>
+                  <li>Git proficiency</li>
+                  <li>Unix/Linux Shell Scripting (Bash)</li>
+                  <li>Google Apps Scripting</li>
+                  <li>Spreadsheet softwares (Microsoft Excel, Google Sheets)</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class = "container px-5">
+            <h5 class="fw-bold mb-3">Work Experience</h5>
+            <ul class="ul-xs">
+              <li><strong>Affiliate Statistician (2025-present): </strong>Affiliated under De La Salle Medical and Health Sciences Institutes as an institutional statistician.
+              <ul class="ul-xs">
+                <li>Statistical Software: R (and RStudio), Python, MATLAB</li>
+              </ul></li>
+              <li><strong>College Instructor 3 (2023-present): </strong>Taught subjects under BS Medical Technology/Medical Laboratory Science.</li>
+              <li><strong>College Laboratory Operations Chair (2025): </strong>Served as OIC laboratory operations chair of the College of Medical Laboratory Science of DLSMHSI</li>
+              <li><strong>Laboratory Analyst II (2020-2023): </strong>Worked as a laboratory analyst on a COVID-19 Molecular Laboratory under joint partnership of the Provincial Government of Cavite and DLSMHSI</li>
+            </ul>
+          </div>          
+          <div class = "container px-5">
+            <h5 class="fw-bold mb-3">Professional License</h5>
+            <ul>
+              <li><strong>Registered Medical Technologist (RMT)</strong></li>
+              Professional Regulation Commission (PRC)
+            </ul>
+          </div>
+          <div class = "container px-5">
+            <h5 class="fw-bold mb-3">Organizational Membership</h5>
+            <ul class="ul-xs">
+              <li>Philippine Statistical Association, Inc. (PSAI)</li>
+              <li>Philippine Association of Medical Technologists (PAMET)</li>
+              <li>Philippine Association of Researchers and Statistical Software Users (PARSSU)</li>
+              <li>Philippine Society for Mathematical Biology (PSMB)</li>
+              <li>Biorisk Association of the Philippines (BRAP)</li>
+            </ul>
+          </div>
+          <div class = "container px-5">
+            <h5 class="fw-bold mb-3">Most Recent Workshop Attended</h5>
+            <ul class="ul-xs">
+            <li><strong>International Workshop on Mathematical Biology 2026 (IWOMB 2026)</strong></li>
+            <div class="col-md-5">
+            <img class="img-fluid rounded-3 my-5" src="images/iwomb.jpg" alt="iwomb">
+            </div>
+          </ul>
+          </div>  
         </section>
         <!--End About-->
-
-
-            <!--Projects-->
-            <!--End Projects-->
-
+        <!--Services-->
+        <section id="stats" class="py-5">
+          <div class = "container px-5">
+            <h2 class="fw-bold mb-3">Statistical Services</h2>
+            <p>I offer statistical services to undergraduate and graduate students from health and social sciences.</p>
+            <h5 class="fw-bold mb-3">Credibility Check</h5>
+            <ul class="small">
+              <li><strong>Approved member of the Philippine Statistical Association, Inc. (PSAI), 
+                a member of the Board of the Philippine Statistics Authority (PSA).</strong>
+              </li>
+              <li>Recognized affiliate statistician of De La Salle Medical and Health Sciences Institute, 
+                under the Language Training and Professional Services (LTPS)</li>
+              <li>Well versed in statistics and statistical software, <strong>as part of my graduate school course requirement
+                under MS Health Informatics (Bioinformatics).</strong>
+                <ul>
+                  <li><strong>Relevant enrolled coursework and grade:</strong></li>
+                  <ul class="small">
+                    <li>BNF 241: Statistics for Bioinformatics (1.75)</li>
+                    <li>MS 398: Practical Scientific Computing/Programming (1.75)</li>
+                    <li>HI 210: System Analysis and Design (1.00)</li>
+                    <li>DS 211: Programming and Data Science (2.25)</li>
+                    <li>DS 220: Data Mining (1.00)</li>
+                    <li>DS 230: Statistical Machine Learning (ongoing)</li>
+                  </ul>
+                </ul>
+              </li>
+            </ul>
+            <h5 class="fw-bold mb-3">Statistical Software</h5>
+            <ul class="small">
+              <li><strong>R</strong> and its integrated develoment environment, RStudio</li>
+              <li><strong>MATLAB</strong> by MathWorks</li>
+              <div class="row align-items-center">
+              <div class="col-auto">
+                <img class="img-fluid rounded-3 my-1" src="images/R_logo.png" alt="Rlogo" width="80"></div>
+              <div class="col-auto">
+                <img class="img-fluid rounded-3 my-1" src="images/RStudio_logo_flat.png" alt="Rstudio" width="80"></div>
+              <div class="col-auto">
+                <img class="img-fluid rounded-3 my-1" src="images/Matlab_Logo.png" alt="matlab" width="80"></div>
+              </div>
+            </ul>
+            <h5 class="fw-bold mb-3">Offered Statistical Services</h5>
+            <ul class="small">
+              <li><strong>Descriptive and Exploratory Data Analysis</strong>
+                <ul>
+                  <li>Measures of Central Tendency, Dispersion, Location, and Shape</li>
+                  <li>Data Visualization (Histogram, Bar plots, Line chart, Tables, Boxplots)</li>
+                  <li>Dimensionality Reduction (Principal Component Analysis)</li>
+                </ul>
+              </li>
+              <li><strong>Data Quality Testing</strong>
+                <ul>
+                  <li>Reliability Analysis (Cronbach's Alpha)</li>
+                  <li>Tests for Normality</li>
+                  <li>Tests for Homogenous Variance</li>
+                  <li>Outlier Detection</li>
+                </ul>
+              </li>
+              <li><strong>Statistical Inference and Hypothesis Testing</strong>
+                <ul>
+                  <li>Sample Size Determination (Power Analysis)</li>
+                  <li>Parametric Tests (t-test, ANOVA)</li>
+                  <li>Non-Parametric Tests</li>
+                  <li>Post Hoc Tests</li>
+                  <li>Correlation Analysis</li>
+                </ul>
+              </li>
+              <li><strong>Regression Analysis</strong>
+                <ul>
+                  <li>Simple Linear Regression</li>
+                  <li>Multiple Linear Regression</li>
+                  <li>Logistic Regression</li>
+                </ul>
+              </li>
+            </ul>
+            <h5 class="fw-bold mb-3">Rates</h5>
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <img class="img-fluid rounded-3 my-1" src="images/ratestats.png" alt="matlab" width="800"></div>
+              </div>
+              <strong>Note:</strong>
+              <ul>
+                <li><strong>Highest Rate Applies</strong><br>If more than one statistical services is chosen, only the highest rate will be paid 
+                  (e.g. if Descriptive (2 page) PLUS Inferential (1 page), with a combined page of 3, the rate is 4,900 only, 
+                  which is based on inferential analysis rates, and NOT 4,000 + 1,500 = 5,500)
+                </li>
+                <li><strong>Additional Request Mid- or Post-Analysis</strong><br>If client wants to add a statistical service mid- or post-analysis (using the same dataset), 
+                  and it resulted to an additional page, the rate will be based on the total number of pages the statistician provided to the client at the end. 
+                  However, if no additional pages are generated, no additional payment.
+                </li>
+                <li><strong>Milestone Payment System</strong><br>An initial payment will be collected from the client. The initial payment will be equivalent to 50% of the max 2 pages. 
+                  Afterwards, the statistician will ask for an online meeting to present their results on screen. 
+                  Once verified by the client, the client will need to pay for the remaining payment before the statistician will forward their results in PDF and DOCX format.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!--End Services-->
             <!--Notebook-->
             <!--End Notebook-->
 
-            <!--Contact-->
-            <!--End Contact-->
+        <!--Contact-->
+        <section id="contact" class="py-5 bg-light">
+          <div class="container px-5">
+            <h2 class="fw-bold mb-4 text-center">Contact</h2>
+
+            <form 
+              id="contactForm"
+              action="https://formspree.io/f/xeeaejpy"
+              method="POST"
+              class="mx-auto"
+              style="max-width: 800px;"
+            >
+
+              <!-- Name & Phone -->
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <input 
+                    type="text" 
+                    name="name"
+                    class="form-control form-control-lg"
+                    placeholder="Name"
+                    required
+                  >
+                </div>
+                <div class="col-md-6">
+                  <input 
+                    type="tel" 
+                    name="phone"
+                    class="form-control form-control-lg"
+                    placeholder="Phone"
+                  >
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="mb-3">
+                <input 
+                  type="email" 
+                  name="email"
+                  class="form-control form-control-lg"
+                  placeholder="Email address"
+                  required
+                >
+              </div>
+
+              <!-- Message -->
+              <div class="mb-4">
+                <textarea 
+                  name="message"
+                  class="form-control form-control-lg"
+                  rows="5"
+                  placeholder="Message"
+                  required
+                ></textarea>
+              </div>
+
+              <!-- Alerts -->
+              <div id="formAlert" class="alert d-none"></div>
+
+              <!-- Button -->
+              <div class="d-grid">
+                <button 
+                  type="submit"
+                  id="submitBtn"
+                  class="btn btn-info btn-lg text-white"
+                >
+                  <span id="btnText">SEND MESSAGE</span>
+                  <span id="btnSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </section>
+
+        <!--End Contact-->
         </main>
     </div>
 
